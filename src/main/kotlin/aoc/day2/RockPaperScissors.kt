@@ -1,4 +1,4 @@
-package aoc.aoc.day2
+package aoc.day2
 
 import aoc.loadInput
 import java.io.File

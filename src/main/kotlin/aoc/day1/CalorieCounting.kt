@@ -1,4 +1,4 @@
-package aoc.aoc.day01
+package aoc.day1
 
 import aoc.loadInput
 import java.io.File
@@ -8,9 +8,6 @@ import java.io.File
  *
  * @author Dominik Hoftych
  */
-
-//@JvmInline
-//value class Elf(var calories: Int = 0)
 
 fun File.part1() = readLines()
     .fold(listOf<Int>() to 0) { (elves, sumCalories), foodCalories ->
