@@ -26,20 +26,42 @@ fun String.asShape() = when (this) {
     else -> throw IllegalArgumentException("Invalid shape: $this")
 }
 
-fun Shape.fight(other: Shape): Int = when {
-    this == other -> score + Draw.score
-    this is Rock && other is Scissors -> score + Win.score
-    this is Paper && other is Rock -> score + Win.score
-    this is Scissors && other is Paper -> score + Win.score
+fun String.asOutcome(): Outcome = when (this) {
+    "X" -> Lose
+    "Y" -> Draw
+    "Z" -> Win
+    else -> throw IllegalArgumentException("Invalid shape: $this")
+}
+
+infix fun Shape.fight(opponent: Shape): Int = when {
+    this == opponent -> score + Draw.score
+    this is Rock && opponent is Scissors -> score + Win.score
+    this is Paper && opponent is Rock -> score + Win.score
+    this is Scissors && opponent is Paper -> score + Win.score
     else -> score + Lose.score
 }
 
+infix fun Shape.yourShapeFor(outcome: Outcome): Shape = when {
+    outcome is Draw -> this
+    this is Paper && outcome == Win -> Scissors
+    this is Paper && outcome == Lose -> Rock
+    this is Rock && outcome == Win -> Paper
+    this is Rock && outcome == Lose -> Scissors
+    this is Scissors && outcome == Win -> Rock
+    this is Scissors && outcome == Lose -> Paper
+    else -> throw IllegalArgumentException("Invalid combination of shape $this and outcome $outcome")
+}
+
 fun File.part1() = readLines()
-    .map { it.split("\\s+".toRegex()).map(String::asShape) }
-    .sumOf { (you, opponent) -> you.fight(opponent) }
+    .map { it.split(" ").map(String::asShape) }
+    .sumOf { (opponent, you) -> you fight opponent }
     .also(::println)
 
 fun File.part2() = readLines()
+    .map { it.split(" ") }
+    .map { (opponent, outcome) -> opponent.asShape() to outcome.asOutcome() }
+    .sumOf { (opponent, outcome) -> outcome.score + (opponent yourShapeFor outcome).score }
+    .also(::println)
 
 fun main() {
     with(loadInput(day = 2)) {
