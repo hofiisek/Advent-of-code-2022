@@ -4,6 +4,8 @@ import aoc.loadInput
 import java.io.File
 
 /**
+ * https://adventofcode.com/2022/day/4
+ *
  * @author Dominik Hoftych
  */
 
