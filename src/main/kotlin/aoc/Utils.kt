@@ -17,3 +17,7 @@ fun Char.index(): Int = ALPHABET.indexOf(this)
 
 fun String.distinctSet(): Set<Char> = toCharArray().toSet()
 
+fun String.matchesNot(regex: Regex) = !matches(regex)
+
+fun <E> MutableList<E>.addFirst(e: E) = add(0, e)
+
