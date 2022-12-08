@@ -25,7 +25,7 @@ fun File.loadForest() = readLines()
         row.mapIndexed { colIdx, height -> Tree(height, Position(rowIdx, colIdx)) }
     }.let(::Matrix)
 
-infix fun List<Tree>.allShorterThan(tree: Tree): Boolean = none { it.height >= tree.height }
+infix fun List<Tree>.allShorterThan(tree: Tree): Boolean = all { it.height < tree.height }
 
 infix fun List<Tree>.numShorterTreesThan(tree: Tree): Int =
     when (val idx = indexOfFirst { it.height >= tree.height }) {
