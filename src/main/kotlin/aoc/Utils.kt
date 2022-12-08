@@ -18,3 +18,5 @@ fun Char.index(): Int = ALPHABET.indexOf(this)
 fun String.distinctSet(): Set<Char> = toCharArray().toSet()
 
 fun String.matchesNot(regex: Regex) = !matches(regex)
+
+fun <T> Iterable<T>.dropFirst(): List<T> = drop(1)
