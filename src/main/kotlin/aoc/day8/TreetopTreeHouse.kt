@@ -25,7 +25,7 @@ fun File.loadForest() = readLines()
         row.mapIndexed { colIdx, height -> Tree(height, Position(rowIdx, colIdx)) }
     }.let(::Matrix)
 
-infix fun List<Tree>.anyTallerThan(tree: Tree): Boolean = none { it.height >= tree.height }
+infix fun List<Tree>.allShorterThan(tree: Tree): Boolean = none { it.height >= tree.height }
 
 infix fun List<Tree>.numShorterTreesThan(tree: Tree): Int =
     when (val idx = indexOfFirst { it.height >= tree.height }) {
@@ -35,18 +35,18 @@ infix fun List<Tree>.numShorterTreesThan(tree: Tree): Int =
     }
 
 context(Forest)
-fun Tree.isVisibleFromOutside(): Boolean = nodesToTheLeft(pos) anyTallerThan this
-        || nodesToTheRight(pos) anyTallerThan this
-        || nodesUp(pos) anyTallerThan this
-        || nodesDown(pos) anyTallerThan this
+fun Tree.isVisibleFromOutside(): Boolean = nodesToTheLeft(pos) allShorterThan this
+        || nodesToTheRight(pos) allShorterThan this
+        || nodesUp(pos) allShorterThan this
+        || nodesDown(pos) allShorterThan this
 
 context(Forest)
 fun Tree.viewingDistance(): Int {
-    val shorterToLeft = nodesToTheLeft(pos) numShorterTreesThan this
-    val shorterToRight = nodesToTheRight(pos) numShorterTreesThan this
-    val shorterToUp = nodesUp(pos) numShorterTreesThan this
-    val shorterToDown = nodesDown(pos) numShorterTreesThan this
-    return shorterToLeft * shorterToRight * shorterToUp * shorterToDown
+    val numShorterToLeft = nodesToTheLeft(pos) numShorterTreesThan this
+    val numShorterToRight = nodesToTheRight(pos) numShorterTreesThan this
+    val numShorterUp = nodesUp(pos) numShorterTreesThan this
+    val numShorterDown = nodesDown(pos) numShorterTreesThan this
+    return numShorterToLeft * numShorterToRight * numShorterUp * numShorterDown
 }
 
 fun File.part1() = with(loadForest()) {
