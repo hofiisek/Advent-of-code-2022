@@ -48,13 +48,13 @@ fun <T> Matrix<T>.adjacentsWithDiagonals(position: Position): Set<T> =
         .toSet()
 
 fun <T> Matrix<T>.nodesToTheLeft(position: Position): List<T> =
-    (0 until position.col).map { getOrThrow(Position(position.row, it)) }.reversed()
+    (0 until position.col).map { Position(position.row, it) }.map(::getOrThrow).reversed()
 
 fun <T> Matrix<T>.nodesToTheRight(position: Position): List<T> =
-    (position.col + 1 until cols).map { getOrThrow(Position(position.row, it)) }
+    (position.col + 1 until cols).map { Position(position.row, it) }.map(::getOrThrow)
 
 fun <T> Matrix<T>.nodesUp(position: Position): List<T> =
-    (0 until position.row).map { getOrThrow(Position(it, position.col)) }.reversed()
+    (0 until position.row).map { Position(it, position.col) }.map(::getOrThrow).reversed()
 
 fun <T> Matrix<T>.nodesDown(position: Position): List<T> =
-    (position.row + 1 until rows).map { getOrThrow(Position(it, position.col)) }
+    (position.row + 1 until rows).map { Position(it, position.col) }.map(::getOrThrow)
